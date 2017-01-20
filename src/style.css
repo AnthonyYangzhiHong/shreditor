@@ -1,0 +1,13 @@
+.shreditor-wrapper {
+    padding: 5px;
+    border: #a3a3a3 solid thin;
+}
+
+.shreditor-toolbar {
+    margin-bottom: 10px;
+}
+
+.shreditor-editor {
+    border-top: #d6d6d6 solid thin;
+    padding: 10px;
+}
