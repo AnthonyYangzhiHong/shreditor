@@ -11,8 +11,7 @@ module.exports = {
         demo: `${base}/demo.jsx`,
         vendor: [
             'react',
-            'react-dom',
-            'react-fa'
+            'react-dom'
         ]
         //editor: `${base}/editor.jsx`
     },
@@ -33,6 +32,10 @@ module.exports = {
                 query: {
                     presets: ["react", "es2015", "stage-0"],
                     plugins: [
+                        ["import", {
+                            "libraryName": "antd",
+                            "style": true
+                        }],
                         "transform-runtime",
                         "transform-decorators-legacy",
                         "react-html-attrs"
@@ -43,6 +46,10 @@ module.exports = {
             {
                 test: /\.css?$/,
                 loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+            },
+            {
+                test: /\.less$/,
+                loader: 'style!css!less'
             },
             {
     		    test: /\.(png|jpg|gif)$/,
@@ -60,6 +67,7 @@ module.exports = {
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'common.bundle.js'}),
-        new ExtractTextPlugin('editor.css')
+        new ExtractTextPlugin('editor.css', {allChunks: true})
     ],
+    postcss: () => []
 };
