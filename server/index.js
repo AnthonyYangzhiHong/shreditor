@@ -5,7 +5,7 @@ var app = express();
 
 app.use(express.static('static'));
 
-app.get('/index', function (req, res) {
+app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, './index.html'))
 });
 
