@@ -51,10 +51,7 @@ export default class FontSize extends React.Component {
         const currentFontSize = this.state.currentFontSize;
         return (
             <Dropdown options={fontSizes} onSelect={this.handleSelect.bind(this)}>
-                {currentFontSize ?
-                    <span>{currentFontSize}</span> :
-                    <Icon name="font"/>
-                }
+                {currentFontSize || 'T'}
             </Dropdown>
         );
     }

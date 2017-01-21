@@ -3,6 +3,8 @@ import { Editor, EditorState, RichUtils } from 'draft-js';
 
 import Inline from './plugins/Inline';
 import FontSize from './plugins/FontSize';
+import FontColor from './plugins/FontColor';
+import FontBackground from './plugins/FontBackground';
 
 import 'muicss/dist/css/mui.css';
 import './style.css';
@@ -36,6 +38,8 @@ export default class ShrEditor extends React.Component {
                         <Inline key={i} editorState={editorState} onChange={this.handleEditorChange.bind(this)} pattern={style}/>
                     )}
                     <FontSize editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
+                    <FontColor editorState={editorState} onChange={this.handleEditorChange.bind(this)} />
+                    <FontBackground editorState={editorState} onChange={this.handleEditorChange.bind(this)} />
                 </div>
                 <div class="shreditor-editor">
                     <Editor

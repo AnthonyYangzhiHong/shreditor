@@ -3,10 +3,11 @@ import { RichUtils} from 'draft-js';
 import Button from '../components/Button';
 import { Icon } from 'react-fa';
 import { getSelectInlineStyle, toggleInlineStyle } from '../utils/inline';
+import { INLINE_STYLES } from '../utils/constant';
 export default class Inline extends React.Component {
 
     static propTypes = {
-        pattern: React.PropTypes.string,
+        pattern: React.PropTypes.oneOf(INLINE_STYLES),
         editorState: React.PropTypes.object,
         onChange: React.PropTypes.func
     };

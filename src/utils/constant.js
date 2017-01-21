@@ -8,19 +8,32 @@ export const INLINE_STYLES = [
 
 export const FONT_SIZES = [8, 9, 10, 11, 12, 14, 18, 24, 30, 36, 48, 60, 72, 96];
 
+export const COLORS = [
+    '#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4',
+    '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107',
+    '#FF9800', '#FF5722', '#795548', '#9E9E9E', '#607D8B', '#000000', '#FFFFFF'
+];
+
 /**
  * 自定义内联样式
  * @type {{*}}
  */
 export const CUSTOM_INLINE_STYLES = {
     FONT_SIZE: {},
-    FONT_FAMILY: {}
+    FONT_FAMILY: {},
+    FONT_COLOR: {},
+    FONT_BACKGROUND: {}
 };
 
 FONT_SIZES.forEach(fontSize => {
    CUSTOM_INLINE_STYLES.FONT_SIZE[`FONT_SIZE-${fontSize}`] = {fontSize};
 });
 
+
+COLORS.forEach(color => {
+    CUSTOM_INLINE_STYLES.FONT_COLOR[`FONT_COLOR-${color}`] = {color};
+    CUSTOM_INLINE_STYLES.FONT_BACKGROUND[`FONT_BACKGROUND-${color}`] = {background: color};
+});
 
 
 /**
@@ -29,6 +42,8 @@ FONT_SIZES.forEach(fontSize => {
  */
 export const CUSTOM_STYLE_MAP = {
     ...CUSTOM_INLINE_STYLES.FONT_SIZE,
+    ...CUSTOM_INLINE_STYLES.FONT_COLOR,
+    ...CUSTOM_INLINE_STYLES.FONT_BACKGROUND,
     SUPERSCRIPT: {
         fontSize: 11,
         position: 'relative',
