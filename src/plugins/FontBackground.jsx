@@ -58,7 +58,8 @@ export default class FontBackground extends React.Component {
                         <Icon name="font"/>
                     </span>
                 }
-                onChange={this.handleChange.bind(this)}/>
+                onChange={this.handleChange.bind(this)}
+                defaultColor={color}/>
         );
     }
 

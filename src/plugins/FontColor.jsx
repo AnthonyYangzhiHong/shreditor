@@ -47,7 +47,7 @@ export default class FontColor extends React.Component {
 
     render() {
 
-        const color = this.state.currentFontColor;
+        const color = this.state.currentFontColor || '#000';
 
         const label = (
             <div>
@@ -57,8 +57,9 @@ export default class FontColor extends React.Component {
 
         return (
             <FontColorPicker
-                label={<span style={{color: color || '#000'}}><Icon name="tint"/></span>}
-                onChange={this.handleChange.bind(this)}/>
+                label={<span style={{color: color}}><Icon name="tint"/></span>}
+                onChange={this.handleChange.bind(this)}
+                defaultColor={color}/>
         );
     }
 

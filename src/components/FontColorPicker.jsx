@@ -1,6 +1,7 @@
+/**
+ * 文字颜色下拉选择
+ */
 import React from 'react';
-
-import MButton from 'muicss/lib/react/button';
 
 import { Icon } from 'react-fa';
 
@@ -22,11 +23,15 @@ export default class FontColorPicker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            opened: false,
-            menuTop: 0
+            opened: false,      //下拉显示
+            menuTop: 0          //下拉菜单顶部位置
         };
     }
 
+    /**
+     * 按钮点击
+     * @param e
+     */
     handleClick(e) {
         e.preventDefault();
         if (this.state.opened) {
@@ -37,6 +42,9 @@ export default class FontColorPicker extends React.Component {
 
     }
 
+    /**
+     * 显示下拉菜单
+     */
     open() {
         let wrapperRect = this.refs.wrapper.getBoundingClientRect();
         let toggleRect = this.refs.button.getBoundingClientRect();
@@ -46,6 +54,9 @@ export default class FontColorPicker extends React.Component {
         });
     }
 
+    /**
+     * 隐藏下拉菜单
+     */
     close() {
         this.setState({
             opened: false
@@ -57,6 +68,15 @@ export default class FontColorPicker extends React.Component {
         this.props.onMouseDown && this.props.onMouseDown(e);
     }
 
+    /**
+     * 颜色发生改变
+     * @param color
+     */
+    handleChange(color) {
+        this.close();   //关闭下拉菜单
+        this.props.onChange && this.props.onChange(color);
+    }
+
     render() {
 
         return (
@@ -66,7 +86,7 @@ export default class FontColorPicker extends React.Component {
                 </button>
                 {this.state.opened ?
                     <div ref="selectEl" style={{top: this.state.menuTop}} className="mui-dropdown__menu mui--is-open">
-                        <ColorPicker {...this.props} />
+                        <ColorPicker {...this.props} onChange={this.handleChange.bind(this)} />
                     </div> :
                     null
                 }
