@@ -41,10 +41,10 @@ export default class Dropdown extends React.Component {
         e.preventDefault();
     }
 
-    handleSelect(e) {
+    handleSelect(value, e) {
         e.preventDefault();
         this.close();
-        this.props.onSelect && this.props.onSelect(e.target.getAttribute('data-value'));
+        this.props.onSelect && this.props.onSelect(value);
     }
 
     /**
@@ -83,7 +83,7 @@ export default class Dropdown extends React.Component {
                 <ul ref="selectEl" style={{top: this.state.menuTop}} className="mui-dropdown__menu mui--is-open">
                     {this.props.options.map((option, i) =>
                         <li key={i}>
-                            <a data-value={option.value} href="javascript:" onClick={this.handleSelect.bind(this)} onMouseDown={this.handleMouseDown}>
+                            <a href="javascript:" onClick={this.handleSelect.bind(this, option.value)} onMouseDown={this.handleMouseDown}>
                                 {option.label || option.value}
                             </a>
                         </li>
@@ -95,7 +95,7 @@ export default class Dropdown extends React.Component {
         return (
             <div className="mui-dropdown" ref="wrapper">
                 <button ref="button" className="mui-btn mui-btn--small" onClick={this.handleClick.bind(this)} onMouseDown={this.handleMouseDown}>
-                    {this.props.label}
+                    {this.props.label} <span class="mui-caret"></span>
                 </button>
                 {this.state.opened ?
                     menu :

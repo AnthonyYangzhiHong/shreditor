@@ -1,12 +1,15 @@
+/**
+ * 设置字体大小
+ */
 import React from 'react';
+
+import CustomInlineStylePlugin from './CustomInlineStylePlugin';
 
 import Dropdown from '../components/Dropdown';
 
 import { FONT_SIZES } from '../utils/constant';
 
-import { toggleCustomInlineStyle, getCustomSelectInlineStyle } from '../utils/inline';
-
-export default class FontSize extends React.Component {
+export default class FontSize extends CustomInlineStylePlugin {
 
     static propTypes = {
         editorState: React.PropTypes.object,
@@ -15,45 +18,26 @@ export default class FontSize extends React.Component {
     };
 
     static defaultProps = {
-        label: <span>T</span>
+        label: <span style={{width: '20px', textAlign: 'left', display: 'inline-block'}}>T</span>
     };
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentFontSize: undefined
-        };
+    init() {
         this.pattern = 'FONT_SIZE';
     }
 
-    componentWillReceiveProps(newProps) {
-        const editorState = newProps.editorState;
-        if (editorState && this.props.editorState !== editorState) {
-            const fontSizeStyle = getCustomSelectInlineStyle(editorState, [this.pattern])[this.pattern];
-            if (fontSizeStyle) {
-                const fontSize = fontSizeStyle.substr(this.pattern.length + 1);
-                if (this.state.currentFontSize != fontSize) {
-                    this.setState({
-                        currentFontSize: fontSize
-                    });
-                }
-            } else if (this.state.currentFontSize) {
-                this.setState({
-                    currentFontSize: undefined
-                });
-            }
-        }
-    }
-
     handleSelect(fontSize) {
-        const { editorState, onChange } = this.props;
-        onChange(toggleCustomInlineStyle(editorState, this.pattern, `${this.pattern}-${fontSize}`));
+        this.change(fontSize);
     }
 
     render() {
         const fontSizes = FONT_SIZES.map(fontSize => {return {value: fontSize}});
-        const currentFontSize = this.state.currentFontSize;
-        const label = currentFontSize ? <span>{currentFontSize}</span> : this.props.label;
+        const currentFontSize = this.state.current;
+        const labelStyle = {
+            width: '20px',
+            textAlign: 'left',
+            display: 'inline-block'
+        };
+        const label = currentFontSize ? <span style={labelStyle}>{currentFontSize}</span> : this.props.label;
         return (
             <Dropdown options={fontSizes} onSelect={this.handleSelect.bind(this)} label={label}/>
         );

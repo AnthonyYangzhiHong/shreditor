@@ -1,59 +1,24 @@
 import React from 'react';
 
+import CustomInlineStylePlugin from './CustomInlineStylePlugin';
+
 import FontColorPicker from '../components/FontColorPicker';
 
 import { Icon } from 'react-fa';
 
-import { toggleCustomInlineStyle, getCustomSelectInlineStyle } from '../utils/inline';
+export default class FontColor extends CustomInlineStylePlugin {
 
-export default class FontColor extends React.Component {
-
-    static propTypes = {
-        editorState: React.PropTypes.object,
-        onChange: React.PropTypes.func
-    };
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentFontColor: undefined
-        };
+    init() {
         this.pattern = 'FONT_COLOR';
     }
 
-    componentWillReceiveProps(newProps) {
-        const editorState = newProps.editorState;
-        if (editorState && this.props.editorState !== editorState) {
-            const fontColorStyle = getCustomSelectInlineStyle(editorState, [this.pattern])[this.pattern];
-            if (fontColorStyle) {
-                const fontColor = fontColorStyle.substr(this.pattern.length + 1);
-                if (this.state.currentFontColor != fontColor) {
-                    this.setState({
-                        currentFontColor: fontColor
-                    });
-                }
-            } else if (this.state.currentFontColor) {
-                this.setState({
-                    currentFontColor: undefined
-                });
-            }
-        }
-    }
-
     handleChange(fontColor) {
-        const { editorState, onChange } = this.props;
-        onChange(toggleCustomInlineStyle(editorState, this.pattern, `${this.pattern}-${fontColor}`));
+        this.change(fontColor);
     }
 
     render() {
 
-        const color = this.state.currentFontColor || '#000';
-
-        const label = (
-            <div>
-
-            </div>
-        );
+        const color = this.state.current || '#000';
 
         return (
             <FontColorPicker

@@ -3,6 +3,7 @@ import { Editor, EditorState, RichUtils } from 'draft-js';
 
 import Inline from './plugins/Inline';
 import FontSize from './plugins/FontSize';
+import FontFamily from './plugins/FontFamily';
 import FontColor from './plugins/FontColor';
 import FontBackground from './plugins/FontBackground';
 
@@ -38,6 +39,7 @@ export default class ShrEditor extends React.Component {
                         <Inline key={i} editorState={editorState} onChange={this.handleEditorChange.bind(this)} pattern={style}/>
                     )}
                     <FontSize editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
+                    <FontFamily editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
                     <FontColor editorState={editorState} onChange={this.handleEditorChange.bind(this)} />
                     <FontBackground editorState={editorState} onChange={this.handleEditorChange.bind(this)} />
                 </div>

@@ -1,3 +1,6 @@
+
+import isObject from 'lodash/isObject';
+
 /**
  * 内敛样式
  * @type {[*]}
@@ -7,6 +10,26 @@ export const INLINE_STYLES = [
 ];
 
 export const FONT_SIZES = [8, 9, 10, 11, 12, 14, 18, 24, 30, 36, 48, 60, 72, 96];
+
+export const FONT_FAMILIES = [
+    'Arial', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana',
+    {
+        name: '微软雅黑',
+        fontFamily: '"Microsoft YaHei", "微软雅黑", "STXihei"'
+    }, {
+        name: '黑体',
+        fontFamily: '"SimHei", "黑体", "STHeiti"'
+    }, {
+        name: '宋体',
+        fontFamily: '"SimSun", "宋体", "STSong"'
+    }, {
+        name: '楷体',
+        fontFamily: '"KaiTi", "楷体", "STKaiti"'
+    }, {
+        name: '仿宋',
+        fontFamily: '"FangSong", "仿宋", "STFangsong"'
+    }
+];
 
 export const COLORS = [
     '#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4',
@@ -29,6 +52,13 @@ FONT_SIZES.forEach(fontSize => {
    CUSTOM_INLINE_STYLES.FONT_SIZE[`FONT_SIZE-${fontSize}`] = {fontSize};
 });
 
+FONT_FAMILIES.forEach(fontFamily => {
+    if (isObject(fontFamily)) {
+        CUSTOM_INLINE_STYLES.FONT_FAMILY[`FONT_FAMILY-${fontFamily.name}`] = {fontFamily: fontFamily.fontFamily};
+    } else {
+        CUSTOM_INLINE_STYLES.FONT_FAMILY[`FONT_FAMILY-${fontFamily}`] = {fontFamily};
+    }
+});
 
 COLORS.forEach(color => {
     CUSTOM_INLINE_STYLES.FONT_COLOR[`FONT_COLOR-${color}`] = {color};
@@ -42,6 +72,7 @@ COLORS.forEach(color => {
  */
 export const CUSTOM_STYLE_MAP = {
     ...CUSTOM_INLINE_STYLES.FONT_SIZE,
+    ...CUSTOM_INLINE_STYLES.FONT_FAMILY,
     ...CUSTOM_INLINE_STYLES.FONT_COLOR,
     ...CUSTOM_INLINE_STYLES.FONT_BACKGROUND,
     SUPERSCRIPT: {
