@@ -2,6 +2,15 @@
  * 下拉框
  */
 import React from 'react';
+import { decorate as mixin } from 'react-mixin';
+import { ListenerMixin } from 'reflux';
+
+import { ModalAction, ModalStore } from '../handler/modal';
+
+import uuid from 'node-uuid';
+import crypto from 'crypto';
+
+@mixin(ListenerMixin)
 export default class Dropdown extends React.Component {
 
     static propTypes = {
@@ -21,6 +30,29 @@ export default class Dropdown extends React.Component {
             opened: false,      //下拉显示
             menuTop: 0          //下拉菜单顶部位置
         };
+        this.uid = this.generateUniqueId();
+    }
+
+    generateUniqueId() {
+        const key = uuid();
+        return crypto.createHash('sha256').update(key).digest('hex').substr(0, 6);
+    }
+
+    componentDidMount() {
+        this.listenTo(ModalStore, this.handleStoreChange.bind(this));
+    }
+
+    handleStoreChange(data, type) {
+        switch (type) {
+            case 'ShowModal':
+                if (this.uid !== data) {
+                    this.close();
+                }
+                break;
+            case 'HideAll':
+                this.close();
+                break;
+        }
     }
 
     /**
@@ -41,6 +73,11 @@ export default class Dropdown extends React.Component {
         e.preventDefault();
     }
 
+    /**
+     * 选择
+     * @param value
+     * @param e
+     */
     handleSelect(value, e) {
         e.preventDefault();
         this.close();
@@ -57,15 +94,18 @@ export default class Dropdown extends React.Component {
             opened: true,
             menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
         });
+        ModalAction.show(this.uid);
     }
 
     /**
      * 隐藏下拉菜单
      */
     close() {
-        this.setState({
-            opened: false
-        });
+        if (this.state.opened) {
+            this.setState({
+                opened: false
+            });
+        }
     }
 
     render() {

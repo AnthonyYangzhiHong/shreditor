@@ -13,6 +13,8 @@ import 'draft-js/dist/Draft.css';
 
 import { INLINE_STYLES, CUSTOM_STYLE_MAP } from './utils/constant';
 
+import { ModalAction } from './handler/modal';
+
 export default class ShrEditor extends React.Component {
 
     static propTypes = {
@@ -26,8 +28,28 @@ export default class ShrEditor extends React.Component {
         };
     }
 
+    /**
+     * 内容发生变化
+     * @param editorState
+     */
     handleEditorChange(editorState) {
         this.setState({editorState});
+    }
+
+    /**
+     * 编辑区域获得焦点
+     * @param e
+     */
+    handleEditorFocus(e) {
+        console.log('on focus');
+    }
+
+    /**
+     * 点击编辑区域
+     * @param e
+     */
+    handleEditorMouseDown(e) {
+        ModalAction.hideAll();
     }
 
     render() {
@@ -43,7 +65,10 @@ export default class ShrEditor extends React.Component {
                     <FontColor editorState={editorState} onChange={this.handleEditorChange.bind(this)} />
                     <FontBackground editorState={editorState} onChange={this.handleEditorChange.bind(this)} />
                 </div>
-                <div class="shreditor-editor">
+                <div
+                    class="shreditor-editor"
+                    onFocus={this.handleEditorFocus.bind(this)}
+                    onMouseDown={this.handleEditorMouseDown.bind(this)}>
                     <Editor
                         customStyleMap={CUSTOM_STYLE_MAP}
                         editorState={editorState}
