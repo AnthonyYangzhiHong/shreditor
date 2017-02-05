@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Dropdown from '../components/Dropdown';
-import { Icon } from 'react-fa';
 
 import { FONT_SIZES } from '../utils/constant';
 
@@ -11,7 +10,12 @@ export default class FontSize extends React.Component {
 
     static propTypes = {
         editorState: React.PropTypes.object,
-        onChange: React.PropTypes.func
+        onChange: React.PropTypes.func,
+        label: React.PropTypes.element
+    };
+
+    static defaultProps = {
+        label: <span>T</span>
     };
 
     constructor(props) {
@@ -49,10 +53,9 @@ export default class FontSize extends React.Component {
     render() {
         const fontSizes = FONT_SIZES.map(fontSize => {return {value: fontSize}});
         const currentFontSize = this.state.currentFontSize;
+        const label = currentFontSize ? <span>{currentFontSize}</span> : this.props.label;
         return (
-            <Dropdown options={fontSizes} onSelect={this.handleSelect.bind(this)}>
-                {currentFontSize || 'T'}
-            </Dropdown>
+            <Dropdown options={fontSizes} onSelect={this.handleSelect.bind(this)} label={label}/>
         );
     }
 

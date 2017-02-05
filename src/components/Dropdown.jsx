@@ -1,46 +1,107 @@
+/**
+ * 下拉框
+ */
 import React from 'react';
-import MDropdown from 'muicss/lib/react/dropdown';
-import MDropdownItem from 'muicss/lib/react/dropdown-item';
-import Caret from 'muicss/lib/react/caret';
-
-import isString from 'lodash/isString';
-
 export default class Dropdown extends React.Component {
 
     static propTypes = {
-        onSelect: React.PropTypes.func,
-        onMouseDown: React.PropTypes.func,
-        size: React.PropTypes.string,
-        options: React.PropTypes.array
+        customMenu: React.PropTypes.element,
+        label: React.PropTypes.element,
+        options: React.PropTypes.array,
+        onSelect: React.PropTypes.func
     };
 
     static defaultProps = {
-        size: 'small'
+        label: <span>button</span>
     };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            opened: false,      //下拉显示
+            menuTop: 0          //下拉菜单顶部位置
+        };
+    }
+
+    /**
+     * 按钮点击
+     * @param e
+     */
+    handleClick(e) {
+        e.preventDefault();
+        if (this.state.opened) {
+            this.close();
+        } else {
+            this.open();
+        }
+
+    }
 
     handleMouseDown(e) {
         e.preventDefault();
-        this.props.onMouseDown && this.props.onMouseDown(e);
+    }
+
+    handleSelect(e) {
+        e.preventDefault();
+        this.close();
+        this.props.onSelect && this.props.onSelect(e.target.getAttribute('data-value'));
+    }
+
+    /**
+     * 显示下拉菜单
+     */
+    open() {
+        let wrapperRect = this.refs.wrapper.getBoundingClientRect();
+        let toggleRect = this.refs.button.getBoundingClientRect();
+        this.setState({
+            opened: true,
+            menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
+        });
+    }
+
+    /**
+     * 隐藏下拉菜单
+     */
+    close() {
+        this.setState({
+            opened: false
+        });
     }
 
     render() {
 
-        const { size, children, onSelect, options } = this.props;
+        let menu;
 
-        let label = children;
-
-        if (isString(children)) {
-            label = (
-                <span>{label} <Caret/></span>
+        if (this.props.customMenu) {
+            menu = (
+                <div ref="selectEl" style={{top: this.state.menuTop}} className="mui-dropdown__menu mui--is-open">
+                    {this.props.customMenu}
+                </div>
+            );
+        } else {
+            menu = (
+                <ul ref="selectEl" style={{top: this.state.menuTop}} className="mui-dropdown__menu mui--is-open">
+                    {this.props.options.map((option, i) =>
+                        <li key={i}>
+                            <a data-value={option.value} href="javascript:" onClick={this.handleSelect.bind(this)} onMouseDown={this.handleMouseDown}>
+                                {option.label || option.value}
+                            </a>
+                        </li>
+                    )}
+                </ul>
             );
         }
 
         return (
-            <MDropdown size={size} onMouseDown={this.handleMouseDown.bind(this)} onSelect={onSelect} label={label}>
-                {options.map(option =>
-                    <MDropdownItem key={option.value} value={option.value}>{option.label || option.value}</MDropdownItem>
-                )}
-            </MDropdown>
+            <div className="mui-dropdown" ref="wrapper">
+                <button ref="button" className="mui-btn mui-btn--small" onClick={this.handleClick.bind(this)} onMouseDown={this.handleMouseDown}>
+                    {this.props.label}
+                </button>
+                {this.state.opened ?
+                    menu :
+                    null
+                }
+            </div>
         );
     }
 
