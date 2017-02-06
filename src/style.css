@@ -11,3 +11,26 @@
     border-top: #d6d6d6 solid thin;
     padding: 10px;
 }
+
+.shreditor-block-align-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.shreditor-block-align-left {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.shreditor-block-align-center {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.shreditor-block-align-justify {
+    display: flex;
+    flex-direction: row;
+}

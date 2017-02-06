@@ -1,6 +1,10 @@
 
 import isObject from 'lodash/isObject';
 
+/**
+ * 块样式
+ * @type {[*]}
+ */
 export const BLOCK_TYPES = [{
     label: 'Heading 1',
     style: 'header-one',
@@ -38,6 +42,12 @@ export const BLOCK_TYPES = [{
     style: 'unstyled',
     tag: 'div'
 }];
+
+/**
+ * 对齐方向
+ * @type {[*]}
+ */
+export const TEXT_ALIGN_DIRECTIONS = ['AlignLeft', 'AlignRight', 'AlignCenter', 'AlignJustify'];
 
 /**
  * 内敛样式

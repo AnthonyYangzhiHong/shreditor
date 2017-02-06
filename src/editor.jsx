@@ -8,12 +8,13 @@ import FontColor from './plugins/FontColor';
 import FontBackground from './plugins/FontBackground';
 
 import BlockType from './plugins/BlockType';
+import TextAlign from './plugins/TextAlign';
 
 import 'muicss/dist/css/mui.css';
 import './style.css';
 import 'draft-js/dist/Draft.css';
 
-import { INLINE_STYLES, CUSTOM_STYLE_MAP } from './utils/constant';
+import { INLINE_STYLES, CUSTOM_STYLE_MAP, TEXT_ALIGN_DIRECTIONS } from './utils/constant';
 
 import { ModalAction } from './handler/modal';
 
@@ -54,6 +55,15 @@ export default class ShrEditor extends React.Component {
         ModalAction.hideAll();
     }
 
+    blockStyleFn(block) {
+        const align = block.getData() && block.getData().get('text-align');
+        if (align) {
+            return `shreditor-block-align-${align}`;
+        } else {
+            return '';
+        }
+    }
+
     render() {
         const editorState = this.state.editorState;
         return (
@@ -67,6 +77,9 @@ export default class ShrEditor extends React.Component {
                     <FontFamily editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
                     <FontColor editorState={editorState} onChange={this.handleEditorChange.bind(this)} />
                     <FontBackground editorState={editorState} onChange={this.handleEditorChange.bind(this)} />
+                    {TEXT_ALIGN_DIRECTIONS.map((align, i) =>
+                        <TextAlign key={i} editorState={editorState} onChange={this.handleEditorChange.bind(this)} align={align}/>
+                    )}
                 </div>
                 <div
                     class="shreditor-editor"
@@ -75,6 +88,7 @@ export default class ShrEditor extends React.Component {
                     <Editor
                         customStyleMap={CUSTOM_STYLE_MAP}
                         editorState={editorState}
+                        blockStyleFn={this.blockStyleFn}
                         onChange={this.handleEditorChange.bind(this)} />
                 </div>
             </div>
