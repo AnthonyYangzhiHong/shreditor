@@ -12,6 +12,8 @@ import { FONT_FAMILIES } from '../utils/constant';
 import truncate from 'lodash/truncate';
 import isObject from 'lodash/isObject';
 
+import { FormattedMessage } from 'react-intl';
+
 export default class FontFamily extends CustomInlineStylePlugin {
 
     static propTypes = {
@@ -21,7 +23,10 @@ export default class FontFamily extends CustomInlineStylePlugin {
     };
 
     static defaultProps = {
-        label: <span style={{width: '60px', textAlign: 'left', display: 'inline-block'}}>字体</span>
+        label: (
+            <span style={{width: '60px', textAlign: 'left', display: 'inline-block'}}>
+                <FormattedMessage id="Font Family" defaultMessage="Font Family"/>
+            </span>)
     };
 
     init() {

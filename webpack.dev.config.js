@@ -52,6 +52,10 @@ module.exports = {
                 loader: 'style!css!less'
             },
             {
+                test: /\.json$/,
+                loader: "json"
+            },
+            {
     		    test: /\.(png|jpg|gif)$/,
     		    loader: 'url?limit=50000'
     	    },
