@@ -52,8 +52,6 @@ export default class TextAlign extends React.Component {
     }
 
     render() {
-
-        const { align } = this.props;
         return (
             <Button color={this.state.isCheck ? 'primary' : undefined} onClick={this.handleClick.bind(this)}>
                 <Icon name={'align-' + this.value}/>
