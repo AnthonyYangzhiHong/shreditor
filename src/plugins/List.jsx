@@ -1,19 +1,20 @@
 /**
- * 对齐方式
+ * 列表
  */
 import React from 'react';
+import { RichUtils} from 'draft-js';
+import { getSelectBlocksType } from '../utils/block';
 
-import { TEXT_ALIGN_DIRECTIONS } from '../utils/constant';
+import { LIST_TYPES } from '../utils/constant';
 
-import { getSelectBlocksMetaData, setBlockData } from '../utils/block';
-
-import { Icon } from 'react-fa';
 import Button from '../components/Button';
 
-export default class TextAlign extends React.Component {
+import { Icon } from 'react-fa';
+
+export default class List extends React.Component {
 
     static propTypes = {
-        align: React.PropTypes.oneOf(TEXT_ALIGN_DIRECTIONS),
+        type: React.PropTypes.oneOf(LIST_TYPES),
         editorState: React.PropTypes.object,
         onChange: React.PropTypes.func
     };
@@ -23,18 +24,19 @@ export default class TextAlign extends React.Component {
         this.state = {
             isCheck: false
         };
-        this.value = this.props.align.substr(5).toLowerCase();
+        this.value = this.props.type.substr(4).toLowerCase();
+        this.blockType = this.value === 'ol' ? 'ordered-list-item' : 'unordered-list-item';
     }
 
     componentWillReceiveProps(newProps) {
         const editorState = newProps.editorState;
         if (editorState && this.props.editorState !== editorState) {
-            const align = getSelectBlocksMetaData(editorState).get('text-align');
-            if (this.state.isCheck && align !== this.value) {
+            const blockType = getSelectBlocksType(editorState);
+            if (this.state.isCheck && blockType !== this.blockType) {
                 this.setState({
                     isCheck: false
                 });
-            } else if (!this.state.isCheck && align === this.value) {
+            } else if (!this.state.isCheck && blockType === this.blockType) {
                 this.setState({
                     isCheck: true
                 });
@@ -42,25 +44,20 @@ export default class TextAlign extends React.Component {
         }
     }
 
-    /**
-     * 点击切换状态
-     */
     handleClick() {
         const { editorState, onChange } = this.props;
-        if (!this.state.isCheck) {
-            onChange && onChange(setBlockData(editorState, {'text-align': this.value}));
-        } else {
-            onChange && onChange(setBlockData(editorState, {'text-align': undefined}));
+        const newState = RichUtils.toggleBlockType(editorState, this.blockType);
+        if (newState) {
+            onChange && onChange(newState);
         }
     }
 
     render() {
         return (
             <Button color={this.state.isCheck ? 'primary' : undefined} onClick={this.handleClick.bind(this)}>
-                <Icon name={'align-' + this.value}/>
+                <Icon name={'list-' + this.value}/>
             </Button>
         );
-
     }
 
 }

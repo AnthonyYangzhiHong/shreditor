@@ -5,7 +5,7 @@ import Dropdown from '../components/Dropdown';
 
 import { BLOCK_TYPES } from '../utils/constant';
 
-import { FormattedMessage, formatMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import truncate from 'lodash/truncate';
 import find from 'lodash/find';
@@ -37,9 +37,15 @@ export default class BlockType extends React.Component {
         if (editorState && this.props.editorState !== editorState) {
             const blockType = getSelectBlocksType(editorState);
             if (blockType !== this.state.current) {
-                this.setState({
-                    current: blockType
-                });
+                if (BLOCK_TYPES.indexOf(blockType) >= 0) {
+                    this.setState({
+                        current: blockType
+                    });
+                } else {
+                    this.setState({
+                        current: undefined
+                    });
+                }
             }
         }
     }
@@ -57,7 +63,8 @@ export default class BlockType extends React.Component {
         const options = BLOCK_TYPES.map(type => {
             return {
                 value: type.style,
-                label: React.createElement(type.tag, {}, <FormattedMessage id={type.label} defaultMessage={type.label}/>)
+                //label: React.createElement(type.tag, {}, <FormattedMessage id={type.label} defaultMessage={type.label}/>)
+                label: <FormattedMessage id={type.label} defaultMessage={type.label}/>
             }
         });
 

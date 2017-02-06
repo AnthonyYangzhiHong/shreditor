@@ -50,6 +50,18 @@ export const BLOCK_TYPES = [{
 export const TEXT_ALIGN_DIRECTIONS = ['AlignLeft', 'AlignRight', 'AlignCenter', 'AlignJustify'];
 
 /**
+ * 列表类型
+ * @type {[*]}
+ */
+export const LIST_TYPES = ['ListOL', 'ListUL'];
+
+/**
+ * 列表缩进
+ * @type {[*]}
+ */
+export const LIST_INDENTS = ['INDENT', 'DEDENT'];
+
+/**
  * 内敛样式
  * @type {[*]}
  */

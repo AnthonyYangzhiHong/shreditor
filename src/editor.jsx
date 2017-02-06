@@ -9,12 +9,14 @@ import FontBackground from './plugins/FontBackground';
 
 import BlockType from './plugins/BlockType';
 import TextAlign from './plugins/TextAlign';
+import List from './plugins/List';
+import Indent from './plugins/Indent';
 
 import 'muicss/dist/css/mui.css';
 import './style.css';
 import 'draft-js/dist/Draft.css';
 
-import { INLINE_STYLES, CUSTOM_STYLE_MAP, TEXT_ALIGN_DIRECTIONS } from './utils/constant';
+import { INLINE_STYLES, CUSTOM_STYLE_MAP, TEXT_ALIGN_DIRECTIONS, LIST_TYPES, LIST_INDENTS } from './utils/constant';
 
 import { ModalAction } from './handler/modal';
 
@@ -79,6 +81,12 @@ export default class ShrEditor extends React.Component {
                     <FontBackground editorState={editorState} onChange={this.handleEditorChange.bind(this)} />
                     {TEXT_ALIGN_DIRECTIONS.map((align, i) =>
                         <TextAlign key={i} editorState={editorState} onChange={this.handleEditorChange.bind(this)} align={align}/>
+                    )}
+                    {LIST_TYPES.map((type, i) =>
+                        <List key={i} editorState={editorState} onChange={this.handleEditorChange.bind(this)} type={type}/>
+                    )}
+                    {LIST_INDENTS.map((type, i) =>
+                        <Indent key={i} editorState={editorState} onChange={this.handleEditorChange.bind(this)} type={type}/>
                     )}
                 </div>
                 <div

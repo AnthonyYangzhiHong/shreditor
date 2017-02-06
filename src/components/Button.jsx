@@ -14,7 +14,8 @@ export default class Button extends React.Component {
     };
 
     static defaultProps = {
-        size: 'small'
+        size: 'small',
+        disabled: false
     };
 
     handleMouseDown(e) {
@@ -29,10 +30,15 @@ export default class Button extends React.Component {
 
     render() {
 
-        const { size, children, color } = this.props;
+        const { size, children, color, disabled } = this.props;
 
         return (
-            <MButton color={color} size={size} onMouseDown={this.handleMouseDown.bind(this)} onClick={this.handleClick.bind(this)}>
+            <MButton
+                color={color}
+                size={size}
+                disabled={disabled}
+                onMouseDown={this.handleMouseDown.bind(this)}
+                onClick={this.handleClick.bind(this)}>
                 {children}
             </MButton>
         );
