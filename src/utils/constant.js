@@ -1,6 +1,44 @@
 
 import isObject from 'lodash/isObject';
 
+export const BLOCK_TYPES = [{
+    label: 'Heading 1',
+    style: 'header-one',
+    tag: 'h1'
+}, {
+    label: 'Heading 2',
+    style: 'header-two',
+    tag: 'h2'
+}, {
+    label: 'Heading 3',
+    style: 'header-three',
+    tag: 'h3'
+}, {
+    label: 'Heading 4',
+    style: 'header-four',
+    tag: 'h4'
+}, {
+    label: 'Heading 5',
+    style: 'header-five',
+    tag: 'h5'
+}, {
+    label: 'Heading 6',
+    style: 'header-six',
+    tag: 'h6'
+}, {
+    label: 'Blockquote',
+    style: 'blockquote',
+    tag: 'blockquote'
+}, {
+    label: 'Code',
+    style: 'code-block',
+    tag: 'pre'
+}, {
+    label: 'Normal',
+    style: 'unstyled',
+    tag: 'div'
+}];
+
 /**
  * 内敛样式
  * @type {[*]}

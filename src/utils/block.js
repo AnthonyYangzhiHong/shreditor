@@ -20,3 +20,13 @@ export function getSelectBlockMap(editorState) {
 export function getSelectBlockList(editorState) {
     return getSelectBlockMap(editorState).toList();
 }
+
+
+export function getSelectBlocksType(editorState) {
+    const blocks = getSelectBlockList(editorState);
+    const isMultiple = blocks.some(block => block.type !== blocks.get(0).type);
+    if (!isMultiple) {
+        return blocks.get(0).type;
+    }
+    return undefined;
+}

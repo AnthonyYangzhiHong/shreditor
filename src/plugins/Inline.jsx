@@ -1,5 +1,4 @@
 import React from 'react';
-import { RichUtils} from 'draft-js';
 import Button from '../components/Button';
 import { Icon } from 'react-fa';
 import { getSelectInlineStyle, toggleInlineStyle } from '../utils/inline';

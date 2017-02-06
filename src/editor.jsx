@@ -7,6 +7,8 @@ import FontFamily from './plugins/FontFamily';
 import FontColor from './plugins/FontColor';
 import FontBackground from './plugins/FontBackground';
 
+import BlockType from './plugins/BlockType';
+
 import 'muicss/dist/css/mui.css';
 import './style.css';
 import 'draft-js/dist/Draft.css';
@@ -57,6 +59,7 @@ export default class ShrEditor extends React.Component {
         return (
             <div class="shreditor-wrapper">
                 <div class="shreditor-toolbar">
+                    <BlockType editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
                     {INLINE_STYLES.map((style, i) =>
                         <Inline key={i} editorState={editorState} onChange={this.handleEditorChange.bind(this)} pattern={style}/>
                     )}
