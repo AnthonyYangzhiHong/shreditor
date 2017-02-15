@@ -16,6 +16,9 @@ import Indent from './plugins/Indent';
 
 import Link from './plugins/Link';
 
+import Undo from './plugins/Undo';
+import Redo from './plugins/Redo';
+
 import 'muicss/dist/css/mui.css';
 import './style.css';
 import 'draft-js/dist/Draft.css';
@@ -127,6 +130,8 @@ export default class ShrEditor extends Base {
                         <Indent key={i} editorState={editorState} onChange={this.handleEditorChange.bind(this)} type={type}/>
                     )}
                     <Link editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
+                    <Undo editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
+                    <Redo editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
                 </div>
                 <div
                     class="shreditor-editor"
