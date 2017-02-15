@@ -2,26 +2,29 @@
  * 下拉框
  */
 import React from 'react';
-import { decorate as mixin } from 'react-mixin';
-import { ListenerMixin } from 'reflux';
+
+import Base from './Base';
 
 import { ModalAction, ModalStore } from '../handler/modal';
 
 import uuid from 'node-uuid';
 import crypto from 'crypto';
 
-@mixin(ListenerMixin)
-export default class Dropdown extends React.Component {
+export default class Dropdown extends Base {
 
     static propTypes = {
         customMenu: React.PropTypes.element,
         label: React.PropTypes.element,
         options: React.PropTypes.array,
-        onSelect: React.PropTypes.func
+        onSelect: React.PropTypes.func,
+        hideCaret: React.PropTypes.bool,
+        onShow: React.PropTypes.func,       //下拉菜单显示
+        onHide: React.PropTypes.func        //下拉菜单隐藏
     };
 
     static defaultProps = {
-        label: <span>button</span>
+        label: <span>button</span>,
+        hideCaret: false
     };
 
     constructor(props) {
@@ -93,8 +96,11 @@ export default class Dropdown extends React.Component {
         this.setState({
             opened: true,
             menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
+        }, () => {
+            ModalAction.show(this.uid);
+            const { onShow } = this.props;
+            onShow && onShow();
         });
-        ModalAction.show(this.uid);
     }
 
     /**
@@ -104,6 +110,9 @@ export default class Dropdown extends React.Component {
         if (this.state.opened) {
             this.setState({
                 opened: false
+            }, () => {
+                const { onHide } = this.props;
+                onHide && onHide();
             });
         }
     }
@@ -135,7 +144,7 @@ export default class Dropdown extends React.Component {
         return (
             <div className="mui-dropdown" ref="wrapper">
                 <button ref="button" className="mui-btn mui-btn--small" onClick={this.handleClick.bind(this)} onMouseDown={this.handleMouseDown}>
-                    {this.props.label} <span class="mui-caret"></span>
+                    {this.props.label} {this.props.hideCaret ? null : <span class="mui-caret"></span>}
                 </button>
                 {this.state.opened ?
                     menu :
