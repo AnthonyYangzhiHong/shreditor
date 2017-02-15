@@ -91,8 +91,8 @@ export default class Dropdown extends Base {
      * 显示下拉菜单
      */
     open() {
-        let wrapperRect = this.refs.wrapper.getBoundingClientRect();
-        let toggleRect = this.refs.button.getBoundingClientRect();
+        let wrapperRect = this.wrapper.getBoundingClientRect();
+        let toggleRect = this.button.getBoundingClientRect();
         this.setState({
             opened: true,
             menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
@@ -142,8 +142,8 @@ export default class Dropdown extends Base {
         }
 
         return (
-            <div className="mui-dropdown" ref="wrapper">
-                <button ref="button" className="mui-btn mui-btn--small" onClick={this.handleClick.bind(this)} onMouseDown={this.handleMouseDown}>
+            <div className="mui-dropdown" ref={(wrapper) => {this.wrapper = wrapper}}>
+                <button ref={button => {this.button = button}} className="mui-btn mui-btn--small" onClick={this.handleClick.bind(this)} onMouseDown={this.handleMouseDown}>
                     {this.props.label} {this.props.hideCaret ? null : <span class="mui-caret"></span>}
                 </button>
                 {this.state.opened ?

@@ -27,14 +27,14 @@ export default class FontColorPicker extends React.Component {
      * @param color
      */
     handleChange(color) {
-        this.refs.dropdown.close(); //关闭下拉菜单
+        this.dropdown.close(); //关闭下拉菜单
         this.props.onChange && this.props.onChange(color);
     }
 
     render() {
 
         return (
-            <Dropdown ref="dropdown" label={this.props.label} customMenu={
+            <Dropdown ref={(dropdown) => {this.dropdown = dropdown}} label={this.props.label} customMenu={
                 <ColorPicker defaultColor={this.props.defaultColor} colors={this.props.colors} onChange={this.handleChange.bind(this)} />
             }/>
         );

@@ -48,7 +48,7 @@ export default class ShrEditor extends Base {
     handleStoreChange(data, type) {
         switch (type) {
             case 'EditorFocus':
-                this.refs.editor.focus();
+                this.editor.focus();
                 break;
         }
     }
@@ -133,7 +133,7 @@ export default class ShrEditor extends Base {
                     onFocus={this.handleEditorFocus.bind(this)}
                     onMouseDown={this.handleEditorMouseDown.bind(this)}>
                     <Editor
-                        ref="editor"
+                        ref={(editor) => {this.editor = editor}}
                         customStyleMap={CUSTOM_STYLE_MAP}
                         editorState={editorState}
                         blockStyleFn={this.blockStyleFn}

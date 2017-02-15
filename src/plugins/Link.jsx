@@ -62,8 +62,7 @@ export default class Link extends React.Component {
         e.preventDefault();
         EditorAction.focus();
         this.editLink();
-
-        this.refs.dropdown.close();
+        this.dropdown.close();
 
     }
 
@@ -137,7 +136,7 @@ export default class Link extends React.Component {
      */
     handleCancel(e) {
         e.preventDefault();
-        this.refs.dropdown.close();
+        this.dropdown.close();
         EditorAction.focus();
     }
 
@@ -201,7 +200,7 @@ export default class Link extends React.Component {
             <div>
                 <Dropdown
                     hideCaret
-                    ref="dropdown"
+                    ref={(dropdown) => {this.dropdown = dropdown}}
                     label={<Icon name="link"/>}
                     onShow={this.handleLinkFormShow.bind(this)}
                     onHide={this.handleLinkFormHide.bind(this)}
