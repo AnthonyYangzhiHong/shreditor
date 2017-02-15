@@ -4,6 +4,14 @@ import { Map } from 'immutable';
 
 import { CHANGE_TYPES } from './constant';
 
+export function getSelectBlock(editorState) {
+    if (editorState) {
+        return getSelectBlockList(editorState).get(0);
+    } else {
+        return undefined;
+    }
+}
+
 export function getSelectBlockMap(editorState) {
 
     const selection = editorState.getSelection();
@@ -73,4 +81,30 @@ export function getSelectBlocksMetaData(editorState) {
         }
     }
     return metaData;
+}
+
+/**
+ * 获取所选文本
+ * @param editorState
+ * @returns {string}
+ */
+export function getSelectText(editorState) {
+    let selectText = '';
+    const selection = editorState.getSelection();
+    let start = selection.getAnchorOffset();
+    let end = selection.getFocusOffset();
+    const blockList = getSelectBlockList(editorState);
+    if (blockList.size > 0) {
+        if (selection.getIsBackward()) {
+            const temp =start;
+            start = end;
+            end = temp;
+        }
+        for (let i = 0; i < blockList.size; i++) {
+            const blockStart = i === 0 ? start : 0;
+            const blockEnd = i === (blockList.size - 1) ? end : blockList.get(i).getText().length;
+            selectText += blockList.get(i).getText().slice(blockStart, blockEnd);
+        }
+    }
+    return selectText;
 }

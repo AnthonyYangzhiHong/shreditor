@@ -10,7 +10,8 @@ export default class Button extends React.Component {
     static propTypes = {
         onClick: React.PropTypes.func,
         onMouseDown: React.PropTypes.func,
-        size: React.PropTypes.oneOf(['small', 'primary', 'large'])
+        size: React.PropTypes.oneOf(['small', 'primary', 'large']),
+        disabled: React.PropTypes.bool
     };
 
     static defaultProps = {

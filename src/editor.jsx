@@ -1,5 +1,7 @@
 import React from 'react';
-import { Editor, EditorState, RichUtils } from 'draft-js';
+import { Editor, EditorState, RichUtils, CompositeDecorator } from 'draft-js';
+
+import Base from './components/Base';
 
 import Inline from './plugins/Inline';
 import FontSize from './plugins/FontSize';
@@ -12,6 +14,8 @@ import TextAlign from './plugins/TextAlign';
 import List from './plugins/List';
 import Indent from './plugins/Indent';
 
+import Link from './plugins/Link';
+
 import 'muicss/dist/css/mui.css';
 import './style.css';
 import 'draft-js/dist/Draft.css';
@@ -19,18 +23,49 @@ import 'draft-js/dist/Draft.css';
 import { INLINE_STYLES, CUSTOM_STYLE_MAP, TEXT_ALIGN_DIRECTIONS, LIST_TYPES, LIST_INDENTS } from './utils/constant';
 
 import { ModalAction } from './handler/modal';
+import { EditorStore } from './handler/editor';
 
-export default class ShrEditor extends React.Component {
+import linkDecorator from './decorators/link';
+
+export default class ShrEditor extends Base {
 
     static propTypes = {
-
+        onChange: React.PropTypes.func
     };
 
     constructor(props) {
         super(props);
+        const decorator = new CompositeDecorator([linkDecorator]);
         this.state = {
-            editorState: EditorState.createEmpty()
+            editorState: this.createEditorState(decorator)
         };
+    }
+
+    componentDidMount() {
+        this.listenTo(EditorStore, this.handleStoreChange.bind(this));
+    }
+
+    handleStoreChange(data, type) {
+        switch (type) {
+            case 'EditorFocus':
+                this.refs.editor.focus();
+                break;
+        }
+    }
+
+    /**
+     * 初始化editorState
+     * @param compositeDecorator
+     * @returns {*}
+     */
+    createEditorState(compositeDecorator) {
+        let editorState;
+        //TODO 处理props中的editorState
+        //
+        if (!editorState) {
+            editorState = EditorState.createEmpty(compositeDecorator);
+        }
+        return editorState;
     }
 
     /**
@@ -38,7 +73,10 @@ export default class ShrEditor extends React.Component {
      * @param editorState
      */
     handleEditorChange(editorState) {
+
         this.setState({editorState});
+        const { onChange } = this.props;
+        onChange && onChange(editorState);
     }
 
     /**
@@ -88,12 +126,14 @@ export default class ShrEditor extends React.Component {
                     {LIST_INDENTS.map((type, i) =>
                         <Indent key={i} editorState={editorState} onChange={this.handleEditorChange.bind(this)} type={type}/>
                     )}
+                    <Link editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
                 </div>
                 <div
                     class="shreditor-editor"
                     onFocus={this.handleEditorFocus.bind(this)}
                     onMouseDown={this.handleEditorMouseDown.bind(this)}>
                     <Editor
+                        ref="editor"
                         customStyleMap={CUSTOM_STYLE_MAP}
                         editorState={editorState}
                         blockStyleFn={this.blockStyleFn}
