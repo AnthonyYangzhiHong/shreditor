@@ -15,6 +15,8 @@ import { getSelectText } from '../utils/block';
 
 import { CHANGE_TYPES } from '../utils/constant';
 
+import { FormattedMessage } from 'react-intl';
+
 export default class Link extends React.Component {
 
     static propTypes = {
@@ -206,30 +208,37 @@ export default class Link extends React.Component {
                     onHide={this.handleLinkFormHide.bind(this)}
                     customMenu={
                         <div style={{padding: '15px', width: '200px'}}>
-                            <form class="mui-form">
-                                <div class="mui-textfield">
+                            <form className="mui-form">
+                                <div className="mui-textfield">
                                     <input type="text" onChange={this.handleLinkChange.bind(this)} value={link}/>
-                                    <label>Link</label>
+                                    <label>
+                                        <FormattedMessage id="Link" defaultMessage="Link"/>
+                                    </label>
                                 </div>
-                                <div class="mui-textfield">
+                                <div className="mui-textfield">
                                     <input type="text" onChange={this.handleTitleChange.bind(this)} value={title}/>
-                                    <label>Title</label>
+                                    <label>
+                                        <FormattedMessage id="Title" defaultMessage="Title"/>
+                                    </label>
                                 </div>
-                                <div class="mui-row">
-                                    <div class="mui-col-md-6">
+                                <div className="mui-row">
+                                    <div className="mui-col-md-6">
                                         <button
                                             onMouseDown={this.handleMouseDown}
                                             onClick={this.handleAdd.bind(this)}
-                                            class="mui-btn mui-btn--small mui-btn--primary mui-btn--raised">
-                                            {isLinkEntity ? "Edit" : "Add"}
+                                            className="mui-btn mui-btn--small mui-btn--primary mui-btn--raised">
+                                            {isLinkEntity ?
+                                                <FormattedMessage id="Edit" defaultMessage="Edit"/> :
+                                                <FormattedMessage id="Add" defaultMessage="Add"/>
+                                            }
                                         </button>
                                     </div>
-                                    <div class="mui-col-md-6">
+                                    <div className="mui-col-md-6">
                                         <button
                                             onMouseDown={this.handleMouseDown}
                                             onClick={this.handleCancel.bind(this)}
-                                            class="mui-btn mui-btn--small mui-btn--raised">
-                                            Cancel
+                                            className="mui-btn mui-btn--small mui-btn--raised">
+                                            <FormattedMessage id="Cancel" defaultMessage="Cancel"/>
                                         </button>
                                     </div>
                                 </div>

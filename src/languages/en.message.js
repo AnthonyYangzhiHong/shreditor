@@ -9,5 +9,10 @@ export default {
     "Heading 6": "Heading 6",
     "Blockquote": "Blockquote",
     "Code": "Code",
-    "Normal": "Normal"
+    "Normal": "Normal",
+    "Edit": "Edit",
+    "Add": "Add",
+    "Cancel": "Cancel",
+    "Link": "Link",
+    "Title": "Title"
 }

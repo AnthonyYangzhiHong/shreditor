@@ -9,5 +9,10 @@ export default {
     "Heading 6": "标题六",
     "Blockquote": "块引用",
     "Code": "代码",
-    "Normal": "普通"
+    "Normal": "普通",
+    "Edit": "编辑",
+    "Add": "新增",
+    "Cancel": "取消",
+    "Link": "链接",
+    "Title": "标题"
 }
