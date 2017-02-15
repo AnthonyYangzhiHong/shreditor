@@ -199,7 +199,7 @@ export default class Link extends React.Component {
         const { editorState } = this.props;
         const isLinkEntity = currentEntityKey && editorState.getCurrentContent().getEntity(currentEntityKey).get('type') === 'LINK';
         return (
-            <div>
+            <div style={{display: "inline-block"}}>
                 <Dropdown
                     hideCaret
                     ref={(dropdown) => {this.dropdown = dropdown}}
