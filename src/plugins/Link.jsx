@@ -89,8 +89,6 @@ export default class Link extends React.Component {
         });
         const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
 
-        console.log(entityKey);
-
         contentState = Modifier.replaceText(contentState, selection, `${title}`, editorState.getCurrentInlineStyle(), entityKey);
 
         let newState = EditorState.push(editorState, contentState, CHANGE_TYPES.INSERT_CHARACTERS);
