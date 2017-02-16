@@ -14,5 +14,11 @@ export default {
     "Add": "Add",
     "Cancel": "Cancel",
     "Link": "Link",
-    "Title": "Title"
+    "Title": "Title",
+    "URL": "URL",
+    "Image Info": "Image Info",
+    "Image Upload": "Image Upload",
+    "Image Src": "Image Src",
+    "Width": "Width",
+    "Height": "Height"
 }

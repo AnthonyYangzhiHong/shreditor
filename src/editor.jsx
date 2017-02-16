@@ -15,6 +15,7 @@ import List from './plugins/List';
 import Indent from './plugins/Indent';
 
 import Link from './plugins/Link';
+import Image from './plugins/Image';
 
 import Undo from './plugins/Undo';
 import Redo from './plugins/Redo';
@@ -29,6 +30,8 @@ import { ModalAction } from './handler/modal';
 import { EditorStore } from './handler/editor';
 
 import linkDecorator from './decorators/link';
+
+import ImageBlock from './blocks/Image';
 
 export default class ShrEditor extends Base {
 
@@ -98,6 +101,21 @@ export default class ShrEditor extends Base {
         ModalAction.hideAll();
     }
 
+    /**
+     * 键盘处理 !重要
+     * @param command
+     * @returns {boolean}
+     */
+    handleKeyCommand(command) {
+        const { editorState } = this.state;
+        const newState = RichUtils.handleKeyCommand(editorState, command);
+        if (newState) {
+            this.handleEditorChange(newState);
+            return true;
+        }
+        return false;
+    }
+
     blockStyleFn(block) {
         const align = block.getData() && block.getData().get('text-align');
         if (align) {
@@ -105,6 +123,21 @@ export default class ShrEditor extends Base {
         } else {
             return '';
         }
+    }
+
+    blockRendererFn(block) {
+
+        if (block.getType() === 'atomic') {
+            const contentState = this.state.editorState.getCurrentContent();
+            const entity = contentState.getEntity(block.getEntityAt(0));
+            if (entity && entity.type === 'IMAGE') {
+                return {
+                    component: ImageBlock,
+                    editable: false
+                };
+            }
+        }
+        return undefined;
     }
 
     render() {
@@ -130,6 +163,7 @@ export default class ShrEditor extends Base {
                         <Indent key={i} editorState={editorState} onChange={this.handleEditorChange.bind(this)} type={type}/>
                     )}
                     <Link editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
+                    <Image editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
                     <Undo editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
                     <Redo editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
                 </div>
@@ -142,6 +176,8 @@ export default class ShrEditor extends Base {
                         customStyleMap={CUSTOM_STYLE_MAP}
                         editorState={editorState}
                         blockStyleFn={this.blockStyleFn}
+                        blockRendererFn={this.blockRendererFn.bind(this)}
+                        handleKeyCommand={this.handleKeyCommand.bind(this)}
                         onChange={this.handleEditorChange.bind(this)} />
                 </div>
             </div>

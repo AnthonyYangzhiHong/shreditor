@@ -14,5 +14,11 @@ export default {
     "Add": "新增",
     "Cancel": "取消",
     "Link": "链接",
-    "Title": "标题"
+    "Title": "标题",
+    "URL": "链接",
+    "Image Info": "图片信息",
+    "Image Upload": "本地上传",
+    "Image Src": "图片地址",
+    "Width": "宽度",
+    "Height": "高度"
 }
