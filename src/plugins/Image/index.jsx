@@ -1,24 +1,27 @@
 import React from 'react';
 
-import Dropdown from '../components/Dropdown';
+import Dropdown from '../../components/Dropdown';
 
 import { Icon } from 'react-fa';
 
-import Tabs from '../components/Tabs';
+import Tabs from '../../components/Tabs';
+
+import Upload from '../../components/Upload';
 
 import { FormattedMessage } from 'react-intl';
 
-import { EditorAction } from '../handler/editor';
+import { EditorAction } from '../../handler/editor';
 
 import { AtomicBlockUtils, EditorState } from 'draft-js';
 
-import { getRemoteImageSize } from '../utils';
+import { getRemoteImageSize } from '../../utils';
 
 export default class Image extends React.Component {
 
     static propTypes = {
         editorState: React.PropTypes.object,
-        onChange: React.PropTypes.func
+        onChange: React.PropTypes.func,
+        imageUploadAction: React.PropTypes.string.isRequired,  //图片上传请求地址
     };
 
     constructor(props) {
@@ -40,6 +43,10 @@ export default class Image extends React.Component {
 
     handleSrcChange(e) {
         const imgSrc = e.target.value;
+        this.setImageSrc(imgSrc);
+    }
+
+    setImageSrc(imgSrc) {
         if (imgSrc !== this.state.src) {
             this.setState({
                 src: imgSrc
@@ -158,6 +165,23 @@ export default class Image extends React.Component {
     }
 
     /**
+     * 上传成功
+     * @param result
+     */
+    handleUploadSuccess(result) {
+        this.setImageSrc(result.path);
+        this.tabs.switchTab(0);
+    }
+
+    handleUploadError(error) {
+
+    }
+
+    handleUploadProgress(event) {
+
+    }
+
+    /**
      * 添加图片
      */
     addImage() {
@@ -171,13 +195,13 @@ export default class Image extends React.Component {
         });
         const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
         let newState = AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, ' ');
-        //newState = EditorState.forceSelection(newState, contentState.getSelectionAfter());
         onChange && onChange(newState);
     }
 
     render() {
 
         const { src, width, height, ratio } = this.state;
+        const { imageUploadAction } = this.props;
 
         return (
             <Dropdown
@@ -186,7 +210,9 @@ export default class Image extends React.Component {
                 label={<Icon name="image"/>}
                 onHide={this.handleImageFormHide.bind(this)}
                 customMenu={
-                    <Tabs wrapperStyle={{padding: '15px', width: '200px'}}>
+                    <Tabs
+                        ref={(tabs) => {this.tabs = tabs}}
+                        wrapperStyle={{padding: '15px', width: '200px'}}>
                         <Tabs.Tab
                             label={<FormattedMessage id="Image Info" defaultMessage="Image Info"/>}
                             paneStyle={{marginTop: "10px"}}>
@@ -236,7 +262,7 @@ export default class Image extends React.Component {
                                 <div className="mui-row">
                                     <div className="mui-col-md-6">
                                         <button
-                                            disabled={ !src }
+                                            disabled={ !src || !width || !height }
                                             onMouseDown={this.handleMouseDown}
                                             onClick={this.handleAdd.bind(this)}
                                             className="mui-btn mui-btn--small mui-btn--primary mui-btn--raised">
@@ -257,7 +283,18 @@ export default class Image extends React.Component {
                         <Tabs.Tab
                             label={<FormattedMessage id="Image Upload" defaultMessage="Image Upload"/>}
                             paneStyle={{marginTop: "10px"}}>
-                            Upload
+                            <Upload
+                                action={imageUploadAction}
+                                onSuccess={this.handleUploadSuccess.bind(this)}
+                                onError={this.handleUploadError.bind(this)}
+                                onProgress={this.handleUploadProgress.bind(this)}>
+                                <p style={{ textAlign: "center", color: "#2196F3" }}>
+                                    <Icon name="upload"/>
+                                </p>
+                                <p style={{ textAlign: "center", color: "#BDBDBD" }}>
+                                    <FormattedMessage id="Click Or Drag File To Upload" defaultMessage="Click Or Drag File To Uploads"/>
+                                </p>
+                            </Upload>
                         </Tabs.Tab>
                     </Tabs>
                 }/>
