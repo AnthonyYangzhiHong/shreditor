@@ -20,4 +20,6 @@ static
 # webstorm project
 .idea/
 
+uploads/
+
 
