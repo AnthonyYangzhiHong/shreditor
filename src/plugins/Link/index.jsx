@@ -2,18 +2,18 @@ import React from 'react';
 
 import { Entity, Modifier, EditorState, RichUtils } from 'draft-js';
 
-import Dropdown from '../components/Dropdown';
-import Button from '../components/Button';
+import Dropdown from '../../components/Dropdown';
+import Button from '../../components/Button';
 
 import { Icon } from 'react-fa';
 
-import { EditorAction } from '../handler/editor';
+import { EditorAction } from '../../handler/editor';
 
-import { getSelectEntityKey, getEntityRange } from '../utils/inline';
+import { getSelectEntityKey, getEntityRange } from '../../utils/inline';
 
-import { getSelectText } from '../utils/block';
+import { getSelectText } from '../../utils/block';
 
-import { CHANGE_TYPES } from '../utils/constant';
+import { CHANGE_TYPES } from '../../utils/constant';
 
 import { FormattedMessage } from 'react-intl';
 

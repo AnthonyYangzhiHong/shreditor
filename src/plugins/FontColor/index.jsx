@@ -1,8 +1,8 @@
 import React from 'react';
 
-import CustomInlineStylePlugin from './CustomInlineStylePlugin';
+import CustomInlineStylePlugin from '../CustomInlineStylePlugin';
 
-import FontColorPicker from '../components/FontColorPicker';
+import FontColorPicker from '../../components/FontColorPicker';
 
 import { Icon } from 'react-fa';
 

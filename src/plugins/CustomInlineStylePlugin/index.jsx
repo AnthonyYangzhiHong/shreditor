@@ -3,7 +3,7 @@
  */
 import React from 'react';
 
-import { toggleCustomInlineStyle, getCustomSelectInlineStyle } from '../utils/inline';
+import { toggleCustomInlineStyle, getCustomSelectInlineStyle } from '../../utils/inline';
 
 export default class CustomInlineStylePlugin extends React.Component {
 

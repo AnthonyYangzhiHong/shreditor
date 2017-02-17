@@ -2,14 +2,14 @@
  * 列表缩进
  */
 import React from 'react';
-import { getSelectBlocksType } from '../utils/block';
-import Button from '../components/Button';
+import { getSelectBlocksType } from '../../utils/block';
+import Button from '../../components/Button';
 
 import { Icon } from 'react-fa';
 
-import { LIST_INDENTS } from '../utils/constant';
+import { LIST_INDENTS } from '../../utils/constant';
 
-import { indent, dedent } from '../utils/list';
+import { indent, dedent } from '../../utils/list';
 
 export default class Indent extends React.Component {
 

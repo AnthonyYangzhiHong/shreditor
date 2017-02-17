@@ -3,11 +3,11 @@
  */
 import React from 'react';
 
-import CustomInlineStylePlugin from './CustomInlineStylePlugin';
+import CustomInlineStylePlugin from '../CustomInlineStylePlugin';
 
-import Dropdown from '../components/Dropdown';
+import Dropdown from '../../components/Dropdown';
 
-import { FONT_SIZES } from '../utils/constant';
+import { FONT_SIZES } from '../../utils/constant';
 
 export default class FontSize extends CustomInlineStylePlugin {
 

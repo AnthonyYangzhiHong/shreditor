@@ -3,9 +3,9 @@
  */
 import React from 'react';
 
-import Base from './Base';
+import Base from '../Base';
 
-import { ModalAction, ModalStore } from '../handler/modal';
+import { ModalAction, ModalStore } from '../../handler/modal';
 
 import uuid from 'node-uuid';
 import crypto from 'crypto';

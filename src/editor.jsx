@@ -29,14 +29,19 @@ import { INLINE_STYLES, CUSTOM_STYLE_MAP, TEXT_ALIGN_DIRECTIONS, LIST_TYPES, LIS
 import { ModalAction } from './handler/modal';
 import { EditorStore } from './handler/editor';
 
-import linkDecorator from './decorators/link';
+import linkDecorator from './decorators/Link';
 
 import ImageBlock from './blocks/Image';
 
 export default class ShrEditor extends Base {
 
     static propTypes = {
-        onChange: React.PropTypes.func
+        onChange: React.PropTypes.func,
+        imageUploadAction: React.PropTypes.string,  //图片上传请求地址
+    };
+
+    static defaultProps = {
+        imageUploadAction: "/upload"
     };
 
     constructor(props) {
@@ -141,7 +146,8 @@ export default class ShrEditor extends Base {
     }
 
     render() {
-        const editorState = this.state.editorState;
+        const { editorState } = this.state;
+        const { imageUploadAction } = this.props;
         return (
             <div class="shreditor-wrapper">
                 <div class="shreditor-toolbar">
@@ -163,7 +169,7 @@ export default class ShrEditor extends Base {
                         <Indent key={i} editorState={editorState} onChange={this.handleEditorChange.bind(this)} type={type}/>
                     )}
                     <Link editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
-                    <Image editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
+                    <Image editorState={editorState} onChange={this.handleEditorChange.bind(this)} imageUploadAction={imageUploadAction}/>
                     <Undo editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
                     <Redo editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
                 </div>

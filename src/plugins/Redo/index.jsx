@@ -1,7 +1,7 @@
 import React from 'react';
-import Base from '../components/Base';
+import Base from '../../components/Base';
 
-import Button from '../components/Button';
+import Button from '../../components/Button';
 
 import { Icon } from 'react-fa';
 

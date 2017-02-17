@@ -3,11 +3,11 @@
  */
 import React from 'react';
 
-import CustomInlineStylePlugin from './CustomInlineStylePlugin';
+import CustomInlineStylePlugin from '../CustomInlineStylePlugin';
 
-import Dropdown from '../components/Dropdown';
+import Dropdown from '../../components/Dropdown';
 
-import { FONT_FAMILIES } from '../utils/constant';
+import { FONT_FAMILIES } from '../../utils/constant';
 
 import truncate from 'lodash/truncate';
 import isObject from 'lodash/isObject';

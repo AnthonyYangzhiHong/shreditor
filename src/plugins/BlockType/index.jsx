@@ -1,13 +1,12 @@
 import React from 'react';
 import { RichUtils} from 'draft-js';
-import { getSelectBlocksType } from '../utils/block';
-import Dropdown from '../components/Dropdown';
+import { getSelectBlocksType } from '../../utils/block';
+import Dropdown from '../../components/Dropdown';
 
-import { BLOCK_TYPES } from '../utils/constant';
+import { BLOCK_TYPES } from '../../utils/constant';
 
 import { FormattedMessage } from 'react-intl';
 
-import truncate from 'lodash/truncate';
 import find from 'lodash/find';
 
 export default class BlockType extends React.Component {

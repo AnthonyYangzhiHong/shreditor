@@ -2,11 +2,11 @@
  * 文字颜色下拉选择
  */
 import React from 'react';
-import Dropdown from './Dropdown';
+import Dropdown from '../Dropdown';
 import { Icon } from 'react-fa';
 
-import ColorPicker from './ColorPicker';
-import { COLORS } from '../utils/constant';
+import ColorPicker from '../ColorPicker';
+import { COLORS } from '../../utils/constant';
 export default class FontColorPicker extends React.Component {
 
     static propTypes = {

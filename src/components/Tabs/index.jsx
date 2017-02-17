@@ -55,6 +55,16 @@ export default class Tabs extends React.Component {
         });
     }
 
+    /**
+     * 切换tab
+     * @param activeKey
+     */
+    switchTab(activeKey) {
+        this.setState({
+            currentActiveKey: activeKey
+        });
+    }
+
     handleMouseDown(e) {
         e.preventDefault();
     }

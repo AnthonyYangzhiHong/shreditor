@@ -1,8 +1,8 @@
 import React from 'react';
-import Button from '../components/Button';
+import Button from '../../components/Button';
 import { Icon } from 'react-fa';
-import { getSelectInlineStyle, toggleInlineStyle } from '../utils/inline';
-import { INLINE_STYLES } from '../utils/constant';
+import { getSelectInlineStyle, toggleInlineStyle } from '../../utils/inline';
+import { INLINE_STYLES } from '../../utils/constant';
 export default class Inline extends React.Component {
 
     static propTypes = {
