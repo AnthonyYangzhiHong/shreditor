@@ -20,5 +20,6 @@ export default {
     "Image Upload": "Image Upload",
     "Image Src": "Image Src",
     "Width": "Width",
-    "Height": "Height"
+    "Height": "Height",
+    "Click Or Drag File To Upload": "Click Or Drag File To Upload"
 }

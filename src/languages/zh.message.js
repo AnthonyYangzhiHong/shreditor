@@ -20,5 +20,6 @@ export default {
     "Image Upload": "本地上传",
     "Image Src": "图片地址",
     "Width": "宽度",
-    "Height": "高度"
+    "Height": "高度",
+    "Click Or Drag File To Upload": "点击或拖动上传"
 }
