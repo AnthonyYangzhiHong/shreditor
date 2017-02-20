@@ -19,19 +19,22 @@ export default class Dropdown extends Base {
         onSelect: React.PropTypes.func,
         hideCaret: React.PropTypes.bool,
         onShow: React.PropTypes.func,       //下拉菜单显示
-        onHide: React.PropTypes.func        //下拉菜单隐藏
+        onHide: React.PropTypes.func,       //下拉菜单隐藏
+        align: React.PropTypes.oneOf(['auto', 'right', 'left']),    //菜单对齐方向，默认左对齐
     };
 
     static defaultProps = {
         label: <span>button</span>,
-        hideCaret: false
+        hideCaret: false,
+        align: "auto"
     };
 
     constructor(props) {
         super(props);
         this.state = {
             opened: false,      //下拉显示
-            menuTop: 0          //下拉菜单顶部位置
+            menuTop: 0,         //下拉菜单顶部位置
+            align: "left"
         };
         this.uid = this.generateUniqueId();
     }
@@ -93,9 +96,15 @@ export default class Dropdown extends Base {
     open() {
         let wrapperRect = this.wrapper.getBoundingClientRect();
         let toggleRect = this.button.getBoundingClientRect();
+        let align = this.props.align;
+        if (align === 'auto') {
+            //自动变化菜单对齐方向
+            align = wrapperRect.left < (window.innerWidth/2) ? 'left' : 'right';
+        }
         this.setState({
             opened: true,
-            menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
+            menuTop: toggleRect.top - wrapperRect.top + toggleRect.height,
+            align: align
         }, () => {
             ModalAction.show(this.uid);
             const { onShow } = this.props;
@@ -119,18 +128,32 @@ export default class Dropdown extends Base {
 
     render() {
 
+        const { label, options, customMenu, hideCaret } = this.props;
+
+        const { menuTop, opened, align } = this.state;
+
         let menu;
 
-        if (this.props.customMenu) {
+        const menuStyle = {
+            top: menuTop
+        };
+
+        let menuClass = "mui-dropdown__menu mui--is-open";
+
+        if (align === "right") {
+            menuClass += " mui-dropdown__menu--right";
+        }
+
+        if (customMenu) {
             menu = (
-                <div ref="selectEl" style={{top: this.state.menuTop}} className="mui-dropdown__menu mui--is-open">
-                    {this.props.customMenu}
+                <div ref="selectEl" style={menuStyle} className={menuClass}>
+                    {customMenu}
                 </div>
             );
         } else {
             menu = (
-                <ul ref="selectEl" style={{top: this.state.menuTop}} className="mui-dropdown__menu mui--is-open">
-                    {this.props.options.map((option, i) =>
+                <ul ref="selectEl" style={menuStyle} className={menuClass}>
+                    {options.map((option, i) =>
                         <li key={i}>
                             <a href="javascript:" onClick={this.handleSelect.bind(this, option.value)} onMouseDown={this.handleMouseDown}>
                                 {option.label || option.value}
@@ -144,9 +167,9 @@ export default class Dropdown extends Base {
         return (
             <div className="mui-dropdown" ref={(wrapper) => {this.wrapper = wrapper}}>
                 <button ref={button => {this.button = button}} className="mui-btn mui-btn--small" onClick={this.handleClick.bind(this)} onMouseDown={this.handleMouseDown}>
-                    {this.props.label} {this.props.hideCaret ? null : <span class="mui-caret"></span>}
+                    {label} {hideCaret ? null : <span class="mui-caret"></span>}
                 </button>
-                {this.state.opened ?
+                {opened ?
                     menu :
                     null
                 }
