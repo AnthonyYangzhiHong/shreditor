@@ -135,7 +135,8 @@ export default class Dropdown extends Base {
         let menu;
 
         const menuStyle = {
-            top: menuTop
+            top: menuTop,
+            zIndex: 2
         };
 
         let menuClass = "mui-dropdown__menu mui--is-open";
