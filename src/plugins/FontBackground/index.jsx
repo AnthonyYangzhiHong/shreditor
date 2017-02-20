@@ -20,7 +20,7 @@ export default class FontBackground extends CustomInlineStylePlugin {
 
     render() {
 
-        const color = this.state.current || '#fff';
+        const color = this.state.current || '#FFFFFF';
 
         return (
             <FontColorPicker

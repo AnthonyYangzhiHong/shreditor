@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Shreditor from './index';
 import { convertToRaw } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
 
 class App extends React.Component {
 
@@ -20,7 +19,7 @@ class App extends React.Component {
     render() {
         const { editorState } = this.state;
         const contentStyle = {
-            width: '100%',
+            width: '30%',
             height: '400px',
             border: '1px solid #F1F1F1',
             padding: '5px',
@@ -30,7 +29,10 @@ class App extends React.Component {
             <div style={{padding: '20px'}}>
                 <h2>demo</h2>
                 <Shreditor onChange={this.handleEditorChange.bind(this)}/>
-                <textarea style={contentStyle} disabled value={editorState && draftToHtml(convertToRaw(editorState.getCurrentContent()))}/>
+                <textarea
+                    style={contentStyle}
+                    disabled
+                    value={editorState && Shreditor.draftToHtml(editorState)}/>
             </div>
         );
     }

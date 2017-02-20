@@ -24,7 +24,7 @@ import 'muicss/dist/css/mui.css';
 import './style.css';
 import 'draft-js/dist/Draft.css';
 
-import { INLINE_STYLES, CUSTOM_STYLE_MAP, TEXT_ALIGN_DIRECTIONS, LIST_TYPES, LIST_INDENTS } from './utils/constant';
+import { INLINE_STYLES, CUSTOM_STYLE_MAP, TEXT_ALIGN_DIRECTIONS, LIST_TYPES, LIST_INDENTS, HTML_INLINE_OPTIONS } from './utils/constant';
 
 import { ModalAction } from './handler/modal';
 import { EditorStore } from './handler/editor';
@@ -32,6 +32,8 @@ import { EditorStore } from './handler/editor';
 import linkDecorator from './decorators/Link';
 
 import ImageBlock from './blocks/Image';
+
+import { stateToHTML } from 'draft-js-export-html';
 
 export default class ShrEditor extends Base {
 
@@ -42,6 +44,14 @@ export default class ShrEditor extends Base {
 
     static defaultProps = {
         imageUploadAction: "/upload"
+    };
+
+    static draftToHtml(editorState) {
+        if (editorState) {
+            const contentState = editorState.getCurrentContent();
+            return stateToHTML(contentState, {inlineStyles: HTML_INLINE_OPTIONS});
+        }
+        return "<p></p>";
     };
 
     constructor(props) {
@@ -149,8 +159,8 @@ export default class ShrEditor extends Base {
         const { editorState } = this.state;
         const { imageUploadAction } = this.props;
         return (
-            <div class="shreditor-wrapper">
-                <div class="shreditor-toolbar">
+            <div className="shreditor-wrapper">
+                <div className="shreditor-toolbar">
                     <BlockType editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
                     {INLINE_STYLES.map((style, i) =>
                         <Inline key={i} editorState={editorState} onChange={this.handleEditorChange.bind(this)} pattern={style}/>
@@ -174,7 +184,7 @@ export default class ShrEditor extends Base {
                     <Redo editorState={editorState} onChange={this.handleEditorChange.bind(this)}/>
                 </div>
                 <div
-                    class="shreditor-editor"
+                    className="shreditor-editor"
                     onFocus={this.handleEditorFocus.bind(this)}
                     onMouseDown={this.handleEditorMouseDown.bind(this)}>
                     <Editor

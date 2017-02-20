@@ -19,7 +19,7 @@ export default class FontColorPicker extends React.Component {
     static defaultProps = {
         colors: COLORS,
         label: <Icon name="tint"/>,
-        defaultColor: '#000'
+        defaultColor: '#000000'
     };
 
     /**
@@ -33,10 +33,19 @@ export default class FontColorPicker extends React.Component {
 
     render() {
 
+        const { label, defaultColor, colors } = this.props;
+
         return (
-            <Dropdown ref={(dropdown) => {this.dropdown = dropdown}} label={this.props.label} customMenu={
-                <ColorPicker defaultColor={this.props.defaultColor} colors={this.props.colors} onChange={this.handleChange.bind(this)} />
-            }/>
+            <Dropdown
+                ref={(dropdown) => {this.dropdown = dropdown}}
+                label={label}
+                customMenu={
+                    <ColorPicker
+                        defaultColor={defaultColor}
+                        colors={colors}
+                        onChange={this.handleChange.bind(this)} />
+                }
+            />
         );
 
     }

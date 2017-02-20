@@ -2,6 +2,10 @@ import React from 'react';
 import { COLORS } from '../../utils/constant';
 import startsWith from 'lodash/startsWith';
 
+import './style.css';
+
+import colorString from 'color-string';
+
 class ColorBlock extends React.Component {
 
     static propTypes = {
@@ -10,7 +14,7 @@ class ColorBlock extends React.Component {
     };
 
     static defaultProps = {
-        color: '#fff'
+        color: '#FFFFFF'
     };
 
     handleClick(e) {
@@ -23,16 +27,15 @@ class ColorBlock extends React.Component {
         const { color } = this.props;
 
         const style = {
-            background: color,
-            width: '20px',
-            height: '20px',
-            margin: '0 6px 6px 0',
-            borderRadius: '4px',
-            cursor: 'pointer'
+            background: color
         };
 
         return (
-            <div className="mui-col-md-1" style={style} onMouseDown={ e => e.preventDefault() } onClick={this.handleClick.bind(this)} />
+            <div
+                className="mui-col-md-1 color-block"
+                style={style}
+                onMouseDown={ e => e.preventDefault() }
+                onClick={this.handleClick.bind(this)} />
         );
     }
 
@@ -55,7 +58,7 @@ export default class ColorPicker extends React.Component {
 
     static defaultProps = {
         colors: COLORS,
-        defaultColor: '#fff'
+        defaultColor: '#FFFFFF'
     };
 
     handleSelect(color) {
@@ -67,6 +70,7 @@ export default class ColorPicker extends React.Component {
 
     handleChange(e) {
         e.preventDefault();
+        const { onChange } = this.props;
         let hex = e.target.value;
         if (!startsWith(hex, '#')) {
             hex = '#' + hex;
@@ -74,7 +78,9 @@ export default class ColorPicker extends React.Component {
         this.setState({
             color: hex
         });
-        this.props.onChange && this.props.onChange(hex);
+        if (colorString.get(hex)) {
+            onChange && onChange(hex);
+        }
     }
 
     render() {

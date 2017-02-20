@@ -3,7 +3,7 @@
  */
 import React from 'react';
 
-import MButton from 'muicss/lib/react/button';
+import assign from 'lodash/assign';
 
 export default class Button extends React.Component {
 
@@ -11,37 +11,62 @@ export default class Button extends React.Component {
         onClick: React.PropTypes.func,
         onMouseDown: React.PropTypes.func,
         size: React.PropTypes.oneOf(['small', 'primary', 'large']),
-        disabled: React.PropTypes.bool
+        color: React.PropTypes.oneOf(['primary', 'danger', 'accent']),
+        disabled: React.PropTypes.bool,
+        style: React.PropTypes.object,
     };
 
     static defaultProps = {
         size: 'small',
+        color: undefined,
         disabled: false
     };
 
     handleMouseDown(e) {
         e.preventDefault();
-        this.props.onMouseDown && this.props.onMouseDown(e);
+        const { onMouseDown } = this.props;
+        onMouseDown && onMouseDown(e);
     }
 
     handleClick(e) {
         e.preventDefault();
-        this.props.onClick && this.props.onClick(e);
+        const { onClick } = this.props;
+        onClick && onClick(e);
+    }
+
+    getBoundingClientRect() {
+        return this.button.getBoundingClientRect();
     }
 
     render() {
 
-        const { size, children, color, disabled } = this.props;
+        const { size, children, color, disabled, style } = this.props;
+
+        let className = "mui-btn";
+        if (color) {
+            className += " mui-btn--" + color;
+        }
+
+        if (size) {
+            className += " mui-btn--" + size;
+        }
+
+        const customStyle = assign({
+            padding: "0 10px",
+            //border: "1px solid #9E9E9E",
+            marginLeft: "2px"
+        }, style);
 
         return (
-            <MButton
-                color={color}
-                size={size}
+            <button
+                ref={(button) => {this.button = button}}
+                className={className}
+                style={customStyle}
                 disabled={disabled}
                 onMouseDown={this.handleMouseDown.bind(this)}
                 onClick={this.handleClick.bind(this)}>
                 {children}
-            </MButton>
+            </button>
         );
     }
 

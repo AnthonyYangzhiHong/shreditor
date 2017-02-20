@@ -9,6 +9,8 @@ import { FormattedMessage } from 'react-intl';
 
 import find from 'lodash/find';
 
+import './style.css';
+
 export default class BlockType extends React.Component {
 
     static propTypes = {
@@ -19,7 +21,7 @@ export default class BlockType extends React.Component {
 
     static defaultProps = {
         label: (
-            <span style={{width: '80px', textAlign: 'left', display: 'inline-block'}}>
+            <span className="dropdown-label">
                 <FormattedMessage id="Formats" defaultMessage="Formats"/>
             </span>)
     };
@@ -36,7 +38,7 @@ export default class BlockType extends React.Component {
         if (editorState && this.props.editorState !== editorState) {
             const blockType = getSelectBlocksType(editorState);
             if (blockType !== this.state.current) {
-                if (BLOCK_TYPES.indexOf(blockType) >= 0) {
+                if (find(BLOCK_TYPES, ['style', blockType])) {
                     this.setState({
                         current: blockType
                     });
@@ -70,13 +72,10 @@ export default class BlockType extends React.Component {
         const currentStyle = this.state.current;
         const currentBlockType = find(BLOCK_TYPES, ['style', currentStyle]);
 
-        const labelStyle = {
-            width: '80px',
-            textAlign: 'left',
-            display: 'inline-block'
-        };
         const label = currentStyle ?
-            <span style={labelStyle}><FormattedMessage id={currentBlockType.label} defaultMessage={currentBlockType.label}/></span> :
+            <span className="dropdown-label">
+                <FormattedMessage id={currentBlockType.label} defaultMessage={currentBlockType.label}/>
+            </span> :
             this.props.label;
 
         return (

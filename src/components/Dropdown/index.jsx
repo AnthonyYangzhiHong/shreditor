@@ -10,6 +10,8 @@ import { ModalAction, ModalStore } from '../../handler/modal';
 import uuid from 'node-uuid';
 import crypto from 'crypto';
 
+import Button from '../Button';
+
 export default class Dropdown extends Base {
 
     static propTypes = {
@@ -167,9 +169,9 @@ export default class Dropdown extends Base {
 
         return (
             <div className="mui-dropdown" ref={(wrapper) => {this.wrapper = wrapper}}>
-                <button ref={button => {this.button = button}} className="mui-btn mui-btn--small" onClick={this.handleClick.bind(this)} onMouseDown={this.handleMouseDown}>
+                <Button ref={button => {this.button = button}} onClick={this.handleClick.bind(this)}>
                     {label} {hideCaret ? null : <span class="mui-caret"></span>}
-                </button>
+                </Button>
                 {opened ?
                     menu :
                     null

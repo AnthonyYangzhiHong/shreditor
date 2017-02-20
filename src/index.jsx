@@ -16,6 +16,10 @@ addLocaleData([...en, ...zh]);
 
 export default class extends React.Component {
 
+    static draftToHtml(contentState) {
+        return Editor.draftToHtml(contentState);
+    }
+
     render() {
         return (
             <IntlProvider locale="zh" messages={zh_message}>

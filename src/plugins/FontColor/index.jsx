@@ -18,7 +18,7 @@ export default class FontColor extends CustomInlineStylePlugin {
 
     render() {
 
-        const color = this.state.current || '#000';
+        const color = this.state.current || '#000000';
 
         return (
             <FontColorPicker

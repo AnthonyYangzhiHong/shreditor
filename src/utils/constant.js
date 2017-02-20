@@ -108,22 +108,34 @@ export const CUSTOM_INLINE_STYLES = {
     FONT_BACKGROUND: {}
 };
 
+/**
+ * 转换为HTML时的映射
+ * @type {{}}
+ */
+export const HTML_INLINE_OPTIONS = {};
+
 FONT_SIZES.forEach(fontSize => {
    CUSTOM_INLINE_STYLES.FONT_SIZE[`FONT_SIZE-${fontSize}`] = {fontSize};
+   HTML_INLINE_OPTIONS[`FONT_SIZE-${fontSize}`] = { style: { fontSize } };
 });
 
 FONT_FAMILIES.forEach(fontFamily => {
     if (isObject(fontFamily)) {
         CUSTOM_INLINE_STYLES.FONT_FAMILY[`FONT_FAMILY-${fontFamily.name}`] = {fontFamily: fontFamily.fontFamily};
+        HTML_INLINE_OPTIONS[`FONT_FAMILY-${fontFamily.name}`] = { style: {fontFamily: fontFamily.fontFamily}};
     } else {
         CUSTOM_INLINE_STYLES.FONT_FAMILY[`FONT_FAMILY-${fontFamily}`] = {fontFamily};
+        HTML_INLINE_OPTIONS[`FONT_FAMILY-${fontFamily.name}`] = { style: {fontFamily}};
     }
 });
 
 COLORS.forEach(color => {
     CUSTOM_INLINE_STYLES.FONT_COLOR[`FONT_COLOR-${color}`] = {color};
     CUSTOM_INLINE_STYLES.FONT_BACKGROUND[`FONT_BACKGROUND-${color}`] = {background: color};
+    HTML_INLINE_OPTIONS[`FONT_COLOR-${color}`] = { style: {color} };
+    HTML_INLINE_OPTIONS[`FONT_BACKGROUND-${color}`] = { style: {background: color} };
 });
+
 
 
 /**
