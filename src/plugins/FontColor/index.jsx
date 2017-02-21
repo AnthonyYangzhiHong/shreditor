@@ -6,6 +6,8 @@ import FontColorPicker from '../../components/FontColorPicker';
 
 import { Icon } from 'react-fa';
 
+import './style.css';
+
 export default class FontColor extends CustomInlineStylePlugin {
 
     init() {
@@ -20,9 +22,18 @@ export default class FontColor extends CustomInlineStylePlugin {
 
         const color = this.state.current || '#000000';
 
+        const labelStyle = {
+            color: '#000',
+            borderColor: color
+        };
+
         return (
             <FontColorPicker
-                label={<span style={{color: color}}><Icon name="tint"/></span>}
+                label={
+                    <div className="font-color-picker-label" style={labelStyle}>
+                        <Icon name="font"/>
+                    </div>
+                }
                 onChange={this.handleChange.bind(this)}
                 defaultColor={color}/>
         );

@@ -8,6 +8,8 @@ import { Icon } from 'react-fa';
 
 import Color from 'color';
 
+import './style.css';
+
 export default class FontBackground extends CustomInlineStylePlugin {
 
     init() {
@@ -22,12 +24,18 @@ export default class FontBackground extends CustomInlineStylePlugin {
 
         const color = this.state.current || '#FFFFFF';
 
+        const labelStyle = {
+            borderColor: '#bdbdbd',
+            background: color,
+            color: Color(color).light() ? "#000" : "#fff"
+        };
+
         return (
             <FontColorPicker
                 label={
-                    <span style={{border: '#bdbdbd solid thin', background: color, color: Color(color).light() ? '#000' : '#fff'}}>
+                    <div className="background-color-picker-label" style={labelStyle}>
                         <Icon name="font"/>
-                    </span>
+                    </div>
                 }
                 onChange={this.handleChange.bind(this)}
                 defaultColor={color}/>
