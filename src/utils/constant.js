@@ -125,7 +125,7 @@ FONT_FAMILIES.forEach(fontFamily => {
         HTML_INLINE_OPTIONS[`FONT_FAMILY-${fontFamily.name}`] = { style: {fontFamily: fontFamily.fontFamily}};
     } else {
         CUSTOM_INLINE_STYLES.FONT_FAMILY[`FONT_FAMILY-${fontFamily}`] = {fontFamily};
-        HTML_INLINE_OPTIONS[`FONT_FAMILY-${fontFamily.name}`] = { style: {fontFamily}};
+        HTML_INLINE_OPTIONS[`FONT_FAMILY-${fontFamily}`] = { style: {fontFamily}};
     }
 });
 
