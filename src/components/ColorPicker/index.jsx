@@ -6,6 +6,8 @@ import './style.css';
 
 import colorString from 'color-string';
 
+import Color from 'color';
+
 class ColorBlock extends React.Component {
 
     static propTypes = {
@@ -27,7 +29,8 @@ class ColorBlock extends React.Component {
         const { color } = this.props;
 
         const style = {
-            background: color
+            background: color,
+            borderColor: Color(color).negate()
         };
 
         return (
@@ -87,11 +90,6 @@ export default class ColorPicker extends React.Component {
 
         const { colors } = this.props;
 
-        const containerStyle = {
-            background: '#fff',
-            width: '232px'
-        };
-
         const selectBodyStyle = {
             padding: '10px 6px 0px 10px'
         };
@@ -102,7 +100,7 @@ export default class ColorPicker extends React.Component {
 
         return (
 
-            <div style={containerStyle} className="mui-container-fluid">
+            <div className="mui-container-fluid color-block-container">
                 <div style={selectBodyStyle} className="mui-row">
                 {colors.map((color, i) =>
                     <ColorBlock color={color} key={i} onChange={this.handleSelect.bind(this)}/>
