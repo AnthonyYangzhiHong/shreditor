@@ -5,7 +5,7 @@ class Link extends React.Component {
     render() {
         const { url } = this.props.contentState.getEntity(this.props.entityKey).getData();
         return (
-            <a href={url}>{this.props.children}</a>
+            <a href={url} target="_blank">{this.props.children}</a>
         );
     }
 }

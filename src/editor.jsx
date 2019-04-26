@@ -49,6 +49,7 @@ export default class ShrEditor extends Base {
     static draftToHtml(editorState) {
         if (editorState) {
             const contentState = editorState.getCurrentContent();
+            console.log(HTML_INLINE_OPTIONS);
             return stateToHTML(contentState, {inlineStyles: HTML_INLINE_OPTIONS});
         }
         return "<p></p>";
